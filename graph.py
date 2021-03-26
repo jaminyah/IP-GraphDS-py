@@ -39,7 +39,7 @@ class Graph:
         while stack:
             vertex = stack.pop()
             if vertex not in visted:
-                print(f"visted add vertex: {vertex}")
+                print(f"dfs: {vertex}")
                 visted.add(vertex)
                 node = self.vert_dict[vertex]
                 
@@ -47,6 +47,23 @@ class Graph:
                     adjacent.add(n.get_id())
                 stack.extend(adjacent - visted)
         return visted
+
+    def bfs(self, start):
+        visted, queue = set(), [start]
+        adjacent = set()
+        
+        while queue:
+            vertex = queue.pop(0)
+            if vertex not in visted:
+                print(f"bfs - {vertex}")
+                visted.add(vertex)
+                node = self.vert_dict[vertex]
+
+                for n in node.get_connections():
+                    adjacent.add(n.get_id())
+                queue.extend(adjacent - visted)
+        return visted
+
 
 if __name__ == "__main__":
 
@@ -74,5 +91,8 @@ if __name__ == "__main__":
     for v in g:
         print(f"g.vert_dict[{v.get_id()}] = {g.vert_dict[v.get_id()]}")
     
-    traversal = g.dfs('a')
-    print(traversal)
+    print("depth first search")
+    print(g.dfs('a'))
+
+    print("breath first: ")
+    print(g.bfs('a'))
